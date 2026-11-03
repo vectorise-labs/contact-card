@@ -33,7 +33,7 @@ number of half-width cells so the grid closes; if it is odd, make the last one `
 | YouTube | `https://www.youtube.com/@<handle>` | @handle |
 | Newsletter or blog | its URL | the domain or title |
 
-Open each URL once (or ask them) to make sure it is right. A wrong handle is worse than none.
+Check each link where you can. LinkedIn blocks automated checks and Instagram answers for any handle, so read those back to the person to confirm. A wrong handle is worse than none.
 
 ## Icons
 

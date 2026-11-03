@@ -2,9 +2,9 @@
 <!--
   Contact card template by Vectorise Labs: https://github.com/vectorise-labs/contact-card
   Structure only. The agent building the card writes styles.css from the
-  person's brand, fills every {{PLACEHOLDER}}, and deletes the blocks the
-  person does not want (each optional block is marked). Keep the class names
-  and ids: styles.css and assets/card.js rely on them.
+  person's brand, fills every placeholder (see references/placeholders.md),
+  and deletes the blocks the person does not want (each optional block is
+  marked). Keep the class names and ids: styles.css and assets/card.js rely on them.
 -->
 <html lang="{{LANG}}">
 <head>
@@ -21,8 +21,14 @@
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="{{SITE_URL}}">
-<meta property="og:image" content="{{SITE_URL}}{{PHOTO_FILE}}">
+<meta property="og:image" content="{{SITE_URL}}og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{PHOTO_ALT}}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{FULL_NAME}} · {{ROLE_LINE}}">
+<meta name="twitter:description" content="{{DESCRIPTION}}">
+<meta name="twitter:image" content="{{SITE_URL}}og.jpg">
 <!-- One rel="me" per public profile, so search engines tie them to this page. -->
 <link rel="me" href="{{PROFILE_URL}}">
 <script type="application/ld+json">
@@ -39,12 +45,14 @@
     "worksFor": { "@type": "Organization", "name": "{{ORGANISATION}}", "url": "{{ORGANISATION_URL}}" },
     "address": { "@type": "PostalAddress", "addressLocality": "{{CITY}}", "addressCountry": "{{COUNTRY_CODE}}" },
     "image": "{{SITE_URL}}{{PHOTO_FILE}}",
+    "email": "mailto:{{EMAIL}}",
     "url": "{{SITE_URL}}",
     "sameAs": ["{{PROFILE_URL}}"]
   }
 }
 </script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <!-- Preload the one or two font files used above the fold, then the stylesheet. -->
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -96,11 +104,11 @@
   <!-- 3. OPTIONAL feature: one framed call to action (a booking link, a product,
        a newsletter, a portfolio). Delete the whole <a> if the person has none. -->
   <a class="feature" href="{{FEATURE_URL}}" target="_blank" rel="noopener">
-    <span class="feature-head"><span class="micro">{{FEATURE_KICKER}}</span><h2>{{FEATURE_TITLE}}</h2></span>
-    <span class="feature-go">
+    <div class="feature-head"><p class="micro">{{FEATURE_KICKER}}</p><h2>{{FEATURE_TITLE}}</h2></div>
+    <div class="feature-go">
       {{FEATURE_ACTION}}
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h16"/><path d="m13 5 7 7-7 7"/></svg>
-    </span>
+    </div>
   </a>
 
   <!-- 4. OPTIONAL about: a short bio and a facts list. Plain facts the person
@@ -125,7 +133,7 @@
     <span class="micro">{{FULL_NAME}}</span>
     <button type="button" id="share" class="share" aria-label="Share this page">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
-      <span class="share-label">Share this page</span>
+      <span class="share-label" aria-live="polite">Share this page</span>
     </button>
   </footer>
   <p class="credit micro"><a href="https://github.com/vectorise-labs/contact-card">Make your own card</a></p>

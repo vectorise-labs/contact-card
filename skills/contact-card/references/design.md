@@ -1,8 +1,26 @@
 # Designing the card
 
-The reference is https://xav.contact/. Open it if you can. What makes it work is not its colours
-but its discipline: one column, one dominant element, one accent, a clear type system, sharp
-details, and nothing left at a browser default. Bring the same discipline to the person's brand.
+The reference is https://xav.contact/; screenshots are in the kit's `docs/` folder (web fetch
+tools drop styles, so look at those). What makes it work is not its colours but its
+discipline: one column, one dominant element, one accent, a clear type system, sharp details,
+nothing left at a browser default, and one signature detail. Bring the same discipline to the
+person's brand. Do not copy the reference's look; build theirs.
+
+## What makes the reference distinctive
+
+- A wide photo of the person in a place (Sydney Harbour), running edge to edge on a phone.
+- The name huge, in a condensed uppercase display face (Anton), tight line height.
+- Small labels in a monospace, uppercase, widely tracked: they read as engineered.
+- Thin blue crop-mark corners on the one framed element of each section: its signature detail.
+- One accent blue on near-black, flat colour, no shadows, square corners.
+- A featured call to action with a small animated diagram, and a real About section with facts.
+
+## The signature detail
+
+Give every card one small, memorable detail drawn from the person's brand or work, used in two
+or three places at most: crop marks for an engineer, a hand-drawn underline for an illustrator,
+a ruled-paper margin for a writer, a stamp-like badge for a café owner, film sprocket edges for
+a filmmaker. One idea, executed precisely, beats many decorations.
 
 ## Principles
 
@@ -62,7 +80,11 @@ https://cdn.jsdelivr.net/npm/@fontsource/<font-id>/files/<font-id>-latin-700-nor
 ```
 
 `<font-id>` is the lowercase hyphenated name (`inter`, `dm-serif-display`, `space-grotesk`). Fetch
-`https://cdn.jsdelivr.net/npm/@fontsource/<font-id>/` to see which weights exist. Declare each
+`https://cdn.jsdelivr.net/npm/@fontsource/<font-id>/` to see which weights exist. Variable fonts
+come as one file: `https://cdn.jsdelivr.net/npm/@fontsource-variable/<font-id>/files/<font-id>-latin-wght-normal.woff2`
+(declare `font-weight: 100 900`). The `latin` subset lacks letters such as ł, ř, ș, ă and
+Vietnamese; if the person's name or text uses them, also download the `latin-ext` (or
+`vietnamese`, `cyrillic`, `greek`) file and declare it with its `unicode-range`. Declare each
 with `@font-face` and `font-display: swap`, preload the one or two used above the fold, and
 include fallbacks (`ui-sans-serif, system-ui, sans-serif`). If the brand uses a paid font, do not
 copy its files: pick the closest free match and say so.
@@ -152,8 +174,11 @@ footer { display: flex; align-items: center; justify-content: space-between; gap
 - Keep strong contrast between modules and the panel: at least 7:1. Dark modules on a light
   panel scan everywhere. Light modules on a dark panel scan in iPhone and Android cameras but not
   in some older scanner apps; on a dark brand you may keep it dark, or give the QR a light panel.
-- The accent may colour the finder centres (`.qr-pupil`) only if it keeps at least 3:1 against
-  the panel. Never colour the data modules with a low-contrast colour, gradients or images.
+- The accent may colour the finder centres (`.qr-pupil`) only if it keeps at least 4.5:1 against
+  the panel; otherwise make them the module colour. Never colour the data modules with a
+  low-contrast colour, gradients or images.
+- If you can, decode your screenshot of the QR (any QR decoder you have) and confirm it gives
+  `SITE_URL`.
 - Keep the built-in quiet zone (the SVG includes it); do not crop or pad it away.
 - Full column width is the default. Do not overlay a logo on it.
 
@@ -173,5 +198,7 @@ Check each against your screenshots, not your memory of the code:
 - [ ] Every link and button has a visible hover and keyboard focus state.
 - [ ] The photo is sharp, correctly cropped (eyes not cut off), and under 400KB.
 - [ ] The QR code is full width, high contrast, square, and points at the live URL.
-- [ ] It looks designed for this person: someone who knows their brand would recognise it.
+- [ ] It looks designed for this person: someone who knows their brand would recognise it, and
+      it has one signature detail.
+- [ ] `og.jpg` (1200 by 630) shows the person well when cropped, for LinkedIn and chat previews.
 - [ ] `scripts/check.sh` passes.

@@ -1,8 +1,9 @@
 /* Contact card behaviour. Template by Vectorise Labs (MIT).
    1. QR: draws this page's QR code as an SVG into .qr[data-url].
    2. Share: native share sheet on phones, copy link elsewhere.
-   3. Add contact: shares contact.vcf as a file on phones (Save to Contacts),
-      falls back to the plain download link everywhere else.
+   3. Add contact: on iPhone and iPad, shares contact.vcf as a file so the
+      share sheet offers Save to Contacts. Everywhere else the link downloads
+      the file, which phones and desktops open in their contacts app.
    No network requests leave this site. */
 (function () {
   "use strict";
@@ -13,6 +14,7 @@
   function drawQR(el) {
     var url = el.getAttribute("data-url") || "";
     if (!/^https?:\/\//.test(url)) url = location.href.split("#")[0];
+    try { url = new URL(url).href; } catch (e) { return; } // punycode and percent-encode, so the QR stays ASCII
     if (typeof qrcode !== "function") return;
     var qr = qrcode(0, "Q");
     qr.addData(url);
@@ -75,23 +77,26 @@
     });
   }
 
-  /* 3. Add contact. Safari saves a plain .vcf link to Files; sharing it as a
-     File (Web Share API level 2) offers Save to Contacts instead. */
+  /* 3. Add contact. iOS Safari saves a plain .vcf link to Files; sharing it as
+     a File (Web Share API level 2, iOS 16+) offers Save to Contacts instead.
+     The file is fetched at page load so the share call runs inside the tap's
+     user-activation window. Android Chrome does not share .vcf files, so other
+     platforms keep the plain download link. */
   var add = document.getElementById("add-contact");
-  if (add && navigator.canShare && location.protocol !== "file:") {
+  var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent.indexOf("Mac") > -1 && navigator.maxTouchPoints > 1);
+  if (add && ios && navigator.canShare && location.protocol !== "file:") {
+    var href = add.getAttribute("href"), vcf = null;
+    fetch(href).then(function (res) { return res.ok ? res.blob() : null; }).then(function (blob) {
+      if (!blob) return;
+      var file = new File([blob], href.split("/").pop(), { type: "text/vcard" });
+      if (navigator.canShare({ files: [file] })) vcf = file;
+    }).catch(function () {});
     add.addEventListener("click", function (e) {
-      var href = add.getAttribute("href");
+      if (!vcf) return; // not ready or not supported: the link downloads as normal
       e.preventDefault();
-      fetch(href).then(function (res) {
-        if (!res.ok) throw new Error("vcf " + res.status);
-        return res.blob();
-      }).then(function (blob) {
-        var file = new File([blob], href.split("/").pop(), { type: "text/vcard" });
-        if (!navigator.canShare({ files: [file] })) { location.href = href; return; }
-        return navigator.share({ files: [file] }).catch(function (err) {
-          if (err && err.name !== "AbortError") location.href = href;
-        });
-      }).catch(function () { location.href = href; });
+      navigator.share({ files: [vcf] }).catch(function (err) {
+        if (err && err.name !== "AbortError") location.href = href;
+      });
     });
   }
 })();

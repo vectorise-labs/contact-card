@@ -7,7 +7,7 @@
       "name": "contact-card",
       "source": "./",
       "description": "Build and publish a personal contact card website styled from your brand, with a Save to Contacts button and QR code, on free GitHub Pages.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "productivity"
     }
   ]

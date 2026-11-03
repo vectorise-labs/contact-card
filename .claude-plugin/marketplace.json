@@ -1,0 +1,14 @@
+{
+  "name": "vectorise",
+  "owner": { "name": "Vectorise Labs", "url": "https://vectoriselabs.com/" },
+  "metadata": { "description": "Public Claude Code plugins from Vectorise Labs." },
+  "plugins": [
+    {
+      "name": "contact-card",
+      "source": "./",
+      "description": "Build and publish a personal contact card website styled from your brand, with a Save to Contacts button and QR code, on free GitHub Pages.",
+      "version": "1.0.0",
+      "category": "productivity"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "contact-card",
+  "version": "1.0.0",
+  "description": "Build and publish a personal contact card website styled from your brand, with a Save to Contacts button and QR code, on free GitHub Pages.",
+  "author": { "name": "Vectorise Labs", "url": "https://vectoriselabs.com/" },
+  "homepage": "https://github.com/vectorise-labs/contact-card",
+  "repository": "https://github.com/vectorise-labs/contact-card",
+  "license": "MIT",
+  "keywords": ["contact-card", "link-in-bio", "vcard", "qr-code", "github-pages"]
+}

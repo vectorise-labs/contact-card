@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+  Contact card template by Vectorise Labs: https://github.com/vectorise-labs/contact-card
+  Structure only. The agent building the card writes styles.css from the
+  person's brand, fills every {{PLACEHOLDER}}, and deletes the blocks the
+  person does not want (each optional block is marked). Keep the class names
+  and ids: styles.css and assets/card.js rely on them.
+-->
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{FULL_NAME}} · {{ROLE_LINE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="author" content="{{FULL_NAME}}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="{{SITE_URL}}">
+<meta name="theme-color" content="{{THEME_COLOR}}">
+<meta property="og:site_name" content="{{FULL_NAME}}">
+<meta property="og:title" content="{{FULL_NAME}} · {{ROLE_LINE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="{{SITE_URL}}">
+<meta property="og:image" content="{{SITE_URL}}{{PHOTO_FILE}}">
+<meta name="twitter:card" content="summary_large_image">
+<!-- One rel="me" per public profile, so search engines tie them to this page. -->
+<link rel="me" href="{{PROFILE_URL}}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "{{SITE_URL}}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{{FULL_NAME}}",
+    "givenName": "{{GIVEN_NAME}}",
+    "familyName": "{{FAMILY_NAME}}",
+    "jobTitle": "{{JOB_TITLE}}",
+    "worksFor": { "@type": "Organization", "name": "{{ORGANISATION}}", "url": "{{ORGANISATION_URL}}" },
+    "address": { "@type": "PostalAddress", "addressLocality": "{{CITY}}", "addressCountry": "{{COUNTRY_CODE}}" },
+    "image": "{{SITE_URL}}{{PHOTO_FILE}}",
+    "url": "{{SITE_URL}}",
+    "sameAs": ["{{PROFILE_URL}}"]
+  }
+}
+</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- Preload the one or two font files used above the fold, then the stylesheet. -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+
+  <!-- 1. Identity: the one dominant element. Photo, name, one line of role. -->
+  <header class="identity">
+    <figure class="photo">
+      <img src="{{PHOTO_FILE}}" width="{{PHOTO_WIDTH}}" height="{{PHOTO_HEIGHT}}" alt="{{PHOTO_ALT}}">
+    </figure>
+    <div class="names">
+      <h1>{{FULL_NAME}}</h1>
+      <p class="micro">{{ROLE_LINE}}</p>
+    </div>
+  </header>
+
+  <!-- 2. Connect: a grid of link cells. The first is the person's main channel
+       and spans the row (class "wide accent"). Copy a cell per link, using the
+       icons in skills/contact-card/references/links.md. -->
+  <section class="section connect" aria-label="Connect">
+    <div class="grid">
+      <a class="cell wide accent" href="{{PRIMARY_URL}}" target="_blank" rel="noopener">
+        {{PRIMARY_ICON_SVG}}
+        <span class="text">
+          <span class="micro">{{PRIMARY_LABEL}}</span>
+          <span class="value">{{PRIMARY_VALUE}}</span>
+        </span>
+      </a>
+      <!-- Save contact: assets/card.js upgrades this to the native share sheet on
+           iOS and Android (Save to Contacts); everywhere else it downloads the file. -->
+      <a class="cell" href="contact.vcf" type="text/vcard" id="add-contact">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+        <span class="text">
+          <span class="micro">Contact card</span>
+          <span class="value">Add to contacts</span>
+        </span>
+      </a>
+      <a class="cell" href="{{LINK_URL}}" target="_blank" rel="noopener">
+        {{LINK_ICON_SVG}}
+        <span class="text">
+          <span class="micro">{{LINK_LABEL}}</span>
+          <span class="value">{{LINK_VALUE}}</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 3. OPTIONAL feature: one framed call to action (a booking link, a product,
+       a newsletter, a portfolio). Delete the whole <a> if the person has none. -->
+  <a class="feature" href="{{FEATURE_URL}}" target="_blank" rel="noopener">
+    <span class="feature-head"><span class="micro">{{FEATURE_KICKER}}</span><h2>{{FEATURE_TITLE}}</h2></span>
+    <span class="feature-go">
+      {{FEATURE_ACTION}}
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 12h16"/><path d="m13 5 7 7-7 7"/></svg>
+    </span>
+  </a>
+
+  <!-- 4. OPTIONAL about: a short bio and a facts list. Plain facts the person
+       confirmed, in their own voice. Delete the section if they want none. -->
+  <section class="section about" aria-labelledby="about-heading">
+    <h2 id="about-heading">About {{GIVEN_NAME}}</h2>
+    <p>{{BIO_PARAGRAPH}}</p>
+    <dl class="facts">
+      <div><dt class="micro">Based in</dt><dd>{{CITY_LONG}}</dd></div>
+      <div><dt class="micro">Role</dt><dd>{{JOB_TITLE}}</dd></div>
+    </dl>
+  </section>
+
+  <!-- 5. Scan: this page's own QR code, full width. assets/card.js draws it from
+       data-url as an SVG with classes qr-data, qr-eye and qr-pupil. -->
+  <section class="section scan" aria-label="Scan to open this card">
+    <div class="qr" data-url="{{SITE_URL}}"></div>
+  </section>
+
+  <!-- 6. Footer: the name, a share button, and the template credit. -->
+  <footer>
+    <span class="micro">{{FULL_NAME}}</span>
+    <button type="button" id="share" class="share" aria-label="Share this page">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+      <span class="share-label">Share this page</span>
+    </button>
+  </footer>
+  <p class="credit micro"><a href="https://github.com/vectorise-labs/contact-card">Make your own card</a></p>
+
+</main>
+<script src="assets/qrcode.js"></script>
+<script src="assets/card.js"></script>
+</body>
+</html>
